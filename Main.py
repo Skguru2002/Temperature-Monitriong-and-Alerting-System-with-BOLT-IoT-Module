@@ -27,7 +27,7 @@ while True:
     if data['success']!=1:
         print("There was an error while retriving the data.")
         print("This is the error:"+data['value'])
-        time.sleep(20)
+        time.sleep(10)
         continue
     try:
         sensor_value=int(data['value'])
@@ -46,12 +46,12 @@ while True:
             print("Status of SMS at Twilio is:"+str(response1.status))
             response_text=json.loads(response2.text)
             print("Response received from Mailgun is:"+str(response_text['message']))
-            time.sleep(20)
+            time.sleep(10)
             mybolt.digitalWrite('0','LOW')
     except Exception as e:
         print("Error occured:Below are the details")
         print(e)
-        time.sleep(20)
+        time.sleep(10)
         continue
     bound=compute(history_data,conf.FRAME_SIZE,conf.MUL_FACTOR)
     print("-----------------------------------------------------------------------------------------------------------")
@@ -59,7 +59,7 @@ while True:
         count=conf.FRAME_SIZE-len(history_data)
         print("Not enough data to compute Z-score.Need",count,"more data points")
         history_data.append(int(data['value']))
-        time.sleep(20)
+        time.sleep(10)
         continue
     try:
         if sensor_value> bound[0]  or sensor_value<bound[1]:
@@ -75,4 +75,4 @@ while True:
         history_data.append(sensor_value)
     except Exception as e:
         print("Error",e)
-    time.sleep(20)
+    time.sleep(10)
